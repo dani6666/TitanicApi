@@ -8,7 +8,7 @@ env:
   AZURE_FUNCTIONAPP_PACKAGE_PATH: TitanicApi/publish
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 6.0.x
-  WORKING_DIRECTORY: src/TitanicApi
+  WORKING_DIRECTORY: src
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
