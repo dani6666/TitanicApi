@@ -2,7 +2,6 @@
 
 public class Passenger
 {
-    public int Id { get; set; }
     public bool Survived { get; set; }
     public int Pclass { get; set; }
     public string Name { get; set; }
@@ -17,7 +16,6 @@ public class Passenger
 
     public Passenger(PassengerEntity passengerEntity)
     {
-        Id = Convert.ToInt32(passengerEntity.RowKey);
         Survived = passengerEntity.Survived == 1;
         Pclass = passengerEntity.Pclass;
         Name = passengerEntity.Name;
