@@ -6,7 +6,7 @@ public class Passenger
     public int Pclass { get; set; }
     public string Name { get; set; }
     public string Sex { get; set; }
-    public decimal? Age { get; set; }
+    public int? Age { get; set; }
     public int SibSp { get; set; }
     public int Parch { get; set; }
     public string Ticket { get; set; }
@@ -24,7 +24,7 @@ public class Passenger
         SibSp = passengerEntity.SibSp;
         Parch = passengerEntity.Parch;
         Ticket = passengerEntity.Ticket;
-        Fare = passengerEntity.Fare;
+        Fare = Convert.ToDecimal(passengerEntity.Fare);
         Cabin = passengerEntity.Cabin;
         Embarked = passengerEntity.Embarked;
     }
