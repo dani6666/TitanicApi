@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TitanicApi.Core.AppSettings;
 using TitanicApi.Core.Interfaces;
 using TitanicApi.Infrastructure;
 
@@ -10,18 +11,23 @@ namespace TitanicApi;
 
 public class Startup : FunctionsStartup
 {
-    public override void Configure(IFunctionsHostBuilder builder)
+    public override void Configure(IFunctionsHostBuilder functionsHostBuilder)
     {
-        builder.Services.AddSingleton<ITitanicDataAccess, TitanicDataAccess>();
-    }
+        FunctionsHostBuilderContext context = functionsHostBuilder.GetContext();
 
-    public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
-    {
-        FunctionsHostBuilderContext context = builder.GetContext();
-
-        builder.ConfigurationBuilder
+        var configurationBuilder = new ConfigurationBuilder()
             .SetBasePath(context.ApplicationRootPath)
             .AddJsonFile("appsettings.json")
-            .AddEnvironmentVariables(prefix: "AppSettings_");
+            .AddEnvironmentVariables("AppSettings__");
+
+        AddServices(functionsHostBuilder.Services, configurationBuilder.Build());
+    }
+
+    private static void AddServices(IServiceCollection services, IConfiguration configuration)
+    {
+        var settings = configuration.Get<AppSettings>();
+
+        services.AddSingleton(_ => settings.AzureTableStorageSettings);
+        services.AddSingleton<ITitanicDataAccess, TitanicDataAccess>();
     }
 }

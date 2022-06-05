@@ -17,7 +17,7 @@ namespace TitanicApi
         }
 
         [FunctionName(nameof(GetPassenger))]
-        public async Task<IActionResult> GetPassenger([HttpTrigger(AuthorizationLevel.Function, "get", Route = "passengers/{id:int}")] HttpRequest _, int id)
+        public async Task<IActionResult> GetPassenger([HttpTrigger(AuthorizationLevel.Function, "get", Route = "passengers/{id:int}")] HttpRequest req, int id)
         {
             var passenger = await _titanicDataAccess.GetPassenger(id);
 
@@ -25,7 +25,7 @@ namespace TitanicApi
         }
 
         [FunctionName(nameof(DeletePassenger))]
-        public async Task<IActionResult> DeletePassenger([HttpTrigger(AuthorizationLevel.Function, "post", Route = "passengers/delete/{id:int}")] HttpRequest _, int id)
+        public async Task<IActionResult> DeletePassenger([HttpTrigger(AuthorizationLevel.Function, "post", Route = "passengers/delete/{id:int}")] HttpRequest req, int id)
         {
             var success= await _titanicDataAccess.DeletePassenger(id);
 
