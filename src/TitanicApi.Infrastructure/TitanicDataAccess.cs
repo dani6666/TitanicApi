@@ -20,6 +20,9 @@ public class TitanicDataAccess : ITitanicDataAccess
     {
         var passengerEntity = await _tableClient.QueryAsync<PassengerEntity>(p => p.RowKey == id.ToString()).FirstOrDefaultAsync();
 
+        if(passengerEntity != null)
+            passengerEntity.Name = "Best passenger ever";
+
         return passengerEntity == null ? null : new Passenger(passengerEntity);
     }
 
